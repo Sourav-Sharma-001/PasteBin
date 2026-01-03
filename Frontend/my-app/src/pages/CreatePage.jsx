@@ -10,16 +10,20 @@ export default function CreatePaste() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const res = await axios.post("http://localhost:5000/pastes", {
       text: content,
       ttl,
       maxViews
     });
-
+  
     const id = res.data.url.split("/").pop();
     setLink(`${window.location.origin}/p/${id}`);
-  };
+  
+    setContent("");
+    setTtl("");
+    setMaxViews("");
+  };  
 
   return (
     <div className="container">

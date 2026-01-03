@@ -53,7 +53,8 @@ router.get("/:id", async (req, res) => {
     res.json({
       text: paste.text,
       views: paste.views,
-      maxViews: paste.maxViews
+      maxViews: paste.maxViews,
+      expiresAt: paste.expiresAt
     });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch paste" });
