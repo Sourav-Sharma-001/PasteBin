@@ -1,22 +1,32 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import "./View.css";
 
 export default function ViewPaste() {
   const { id } = useParams();
+  const [paste, setPaste] = useState(null);
+  const [error, setError] = useState("");
 
-  const paste = {
-    content: "This is a sample paste content.\nRead-only view.",
-    remaining_views: 3,
-    expires_at: "2026-01-01T00:00:00Z",
-  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/pastes/${id}`)
+      .then((res) => setPaste(res.data))
+      .catch((err) =>
+        setError(err.response?.data?.error || "Something went wrong")
+      );
+  }, [id]);
+
+  if (error) return <div className="view-container">{error}</div>;
+  if (!paste) return <div className="view-container">Loading...</div>;
 
   return (
     <div className="view-container">
-      <pre className="paste-box">{paste.content}</pre>
+      <pre className="paste-box">{paste.text}</pre>
 
       <div className="meta">
-        <span>Remaining views: {paste.remaining_views}</span>
-        <span>Expires at: {paste.expires_at}</span>
+        <span>Views used: {paste.views}</span>
+        <span>Max views: {paste.maxViews}</span>
       </div>
     </div>
   );

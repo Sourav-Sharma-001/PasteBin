@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./Create.css"
+import axios from "axios";
+import "./Create.css";
 
 export default function CreatePaste() {
   const [content, setContent] = useState("");
@@ -7,10 +8,17 @@ export default function CreatePaste() {
   const [maxViews, setMaxViews] = useState("");
   const [link, setLink] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLink("https://your-app.vercel.app/p/abc123");
+    const res = await axios.post("http://localhost:5000/pastes", {
+      text: content,
+      ttl,
+      maxViews
+    });
+
+    const id = res.data.url.split("/").pop();
+    setLink(`${window.location.origin}/p/${id}`);
   };
 
   return (
@@ -28,15 +36,17 @@ export default function CreatePaste() {
         <div className="options">
           <input
             type="number"
-            placeholder="TTL (seconds)"
+            placeholder="TTL (minutes)"
             value={ttl}
             onChange={(e) => setTtl(e.target.value)}
+            required
           />
           <input
             type="number"
             placeholder="Max Views"
             value={maxViews}
             onChange={(e) => setMaxViews(e.target.value)}
+            required
           />
         </div>
 
@@ -46,7 +56,7 @@ export default function CreatePaste() {
       {link && (
         <div className="result">
           <p>Share this link:</p>
-          <a href={link}>{link}</a>
+          <a href={link} target="_blank" rel="noreferrer">{link}</a>
         </div>
       )}
     </div>
