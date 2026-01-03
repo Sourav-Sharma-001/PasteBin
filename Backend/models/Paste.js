@@ -5,10 +5,11 @@ const pasteSchema = new mongoose.Schema({
   ttl: { type: Number, required: true },
   maxViews: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
+  expiresAt: { type: Date, required: true },
   views: { type: Number, default: 0 },
   uniqueId: { type: String, required: true, unique: true }
 });
 
-const Paste = mongoose.model("Paste", pasteSchema);
+pasteSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
-module.exports = Paste;
+module.exports = mongoose.model("Paste", pasteSchema);
