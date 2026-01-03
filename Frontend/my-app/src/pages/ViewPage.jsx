@@ -11,7 +11,7 @@ export default function ViewPaste() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/pastes/${id}`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/pastes/${id}`)
       .then((res) => {
         setPaste(res.data);
 
