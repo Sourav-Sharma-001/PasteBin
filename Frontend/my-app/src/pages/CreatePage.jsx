@@ -10,20 +10,20 @@ export default function CreatePaste() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const res = await axios.post("http://localhost:5000/pastes", {
       text: content,
       ttl,
-      maxViews
+      maxViews,
     });
-  
+
     const id = res.data.url.split("/").pop();
     setLink(`${window.location.origin}/p/${id}`);
-  
+
     setContent("");
     setTtl("");
     setMaxViews("");
-  };  
+  };
 
   return (
     <div className="container">
@@ -60,7 +60,17 @@ export default function CreatePaste() {
       {link && (
         <div className="result">
           <p>Share this link:</p>
-          <a href={link} target="_blank" rel="noreferrer">{link}</a>
+          <div className="link-row">
+            <a href={link} target="_blank" rel="noreferrer">
+              {link}
+            </a>
+            <button
+              className="copy-btn"
+              onClick={() => navigator.clipboard.writeText(link)}
+            >
+              📋
+            </button>
+          </div>
         </div>
       )}
     </div>
