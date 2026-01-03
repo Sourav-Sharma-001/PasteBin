@@ -50,11 +50,16 @@ router.get("/:id", async (req, res) => {
     paste.views += 1;
     await paste.save();
 
-    res.json({ text: paste.text });
+    res.json({
+      text: paste.text,
+      views: paste.views,
+      maxViews: paste.maxViews
+    });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch paste" });
   }
 });
+
 
 
 module.exports = router;
