@@ -1,0 +1,22 @@
+.view-container {
+  max-width: 50rem;
+  margin: 2.5rem auto;
+  padding: 1.25rem;
+}
+
+.paste-box {
+  background: #f6f8fa;
+  padding: 1.25rem;
+  border-radius: 0.25rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: monospace;
+}
+
+.meta {
+  margin-top: 0.9375rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: #555;
+}
